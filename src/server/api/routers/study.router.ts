@@ -59,7 +59,11 @@ export const studyRouter = createTRPCRouter({
           where: { studySetId: id }
         })
 
-        return { ...studySet, cards }
+        const createdBy = await ctx.db.user.findFirst({
+          where: { id: studySet?.userId }
+        })
+
+        return { ...studySet, cards, createdBy }
       } catch (error) {
         throw new Error((error as Error)?.message)
       }

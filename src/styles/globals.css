@@ -61,7 +61,7 @@
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 225 30% 26%;
     --card-foreground: 210 40% 98%;
 
     --card2: 222 47% 11%;
@@ -104,6 +104,10 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* body * {
+    @apply transition-colors duration-200;
+  } */
 }
 
 @layer components {
@@ -133,4 +137,50 @@
   .after-bottom {
     @apply relative after:absolute after:bottom-0 after:inset-x-0 after:h-px after:bg-black after:transition-all after:duration-300;
   }
+
+  .box-with-after {
+    @apply p-3 shadow-sm rounded-md bg-card overflow-hidden cursor-pointer;
+    @apply relative after:absolute after:bottom-0 after:inset-x-0 after:h-[3px] after:bg-primary after:transition-all after:duration-300 after:opacity-0 hover:after:opacity-100;
+  }
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.3s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card[aria-hidden='true'] .flip-card-inner {
+  transform: rotateX(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: hsl(var(--card));
+  color: black;
+}
+
+.flip-card-back {
+  background-color: hsl(var(--card));
+  color: black;
+  transform: rotateX(180deg);
 }

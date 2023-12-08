@@ -112,6 +112,9 @@ module.exports = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'bounce-to-right': 'bounce-to-right infinite 0.75s ease-in-out',
         'bounce-to-left': 'bounce-to-left infinite 0.75s ease-in-out'
+      },
+      screens: {
+        '3xl': '1920px'
       }
     }
   },

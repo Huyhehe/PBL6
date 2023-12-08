@@ -15,9 +15,9 @@ import {
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
 
-type TComponent = { title: string; href: string; description: string }
+type TExploreItem = { title: string; href: string; description: string }
 
-const components: TComponent[] = [
+const exploreItems: TExploreItem[] = [
   {
     title: 'Create you set',
     href: '/create-set',
@@ -25,13 +25,13 @@ const components: TComponent[] = [
       'Create your own set of words and phrases to practice and improve your English.'
   },
   {
-    title: 'Hover Card',
-    href: '/docs/primitives/hover-card',
+    title: 'Grammar Practice',
+    href: '/grammar',
     description: 'For sighted users to preview content available behind a link.'
   },
   {
-    title: 'Progress',
-    href: '/docs/primitives/progress',
+    title: 'Auto correction',
+    href: '/auto-correction',
     description:
       'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.'
   },
@@ -93,17 +93,17 @@ export function MenuBox() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-card">
-            Components
+            Explore
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
+              {exploreItems.map((exploreItem) => (
                 <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+                  key={exploreItem.title}
+                  title={exploreItem.title}
+                  href={exploreItem.href}
                 >
-                  {component.description}
+                  {exploreItem.description}
                 </ListItem>
               ))}
             </ul>

@@ -103,13 +103,17 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
     }
   })
 
-  const onSignInFormSubmit = async (data: z.infer<typeof signInformSchema>) => {
+  const onSignInFormSubmit = (data: z.infer<typeof signInformSchema>) => {
     // loginUserMutation.mutate({
     //   username: data.username,
     //   password: data.password
     // })
     try {
-      await signIn()
+      // await signIn()
+      toast({
+        title: 'Please try to continue with Google or Github',
+        variant: 'destructive'
+      })
     } catch (error) {
       console.log(error)
     }
@@ -178,7 +182,11 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() => void signOut()}
+              onClick={() =>
+                void signOut({
+                  callbackUrl: '/'
+                })
+              }
             >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Logout</span>

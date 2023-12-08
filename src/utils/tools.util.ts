@@ -1,3 +1,6 @@
+import { cn } from '@/lib/utils'
+import { type RecognitionResult } from '@/types/client-types/ai-route'
+
 export const pagingDataReturn = <T>({
   items,
   page,
@@ -51,4 +54,61 @@ export const levelTransformerToNumber = (level: string) => {
     default:
       return 0
   }
+}
+
+export const getRecognitionResultExtracted = (data: RecognitionResult) => {
+  const { NBest } = data
+  const accuracyScore =
+    NBest?.reduce((acc, cur) => {
+      return acc + cur.AccuracyScore
+    }, 0) / NBest?.length
+
+  const fluencyScore =
+    NBest?.reduce((acc, cur) => {
+      return acc + cur.FluencyScore
+    }, 0) / NBest?.length
+
+  const completenessScore =
+    NBest?.reduce((acc, cur) => {
+      return acc + cur.CompletenessScore
+    }, 0) / NBest?.length
+
+  const pronScore =
+    NBest?.reduce((acc, cur) => {
+      return acc + cur.PronScore
+    }, 0) / NBest?.length
+
+  const wordOmitted = NBest?.reduce((acc, cur) => {
+    return acc + cur.Lexical || ''
+  }, '')
+
+  const words = NBest?.[0]?.Words || []
+
+  return {
+    accuracyScore,
+    fluencyScore,
+    completenessScore,
+    pronScore,
+    wordOmitted,
+    words
+  }
+}
+
+export const generateColorForTableCell = (
+  type: 'word' | 'phoneme',
+  score: number
+) => {
+  if (type === 'word') {
+    return cn({
+      'bg-green-300': score >= 80,
+      'bg-yellow-300': score >= 60 && score < 80,
+      'bg-red-100': score < 60
+    })
+  }
+  return cn({
+    'bg-green-700': score >= 80,
+    'bg-green-100': score >= 60 && score < 80,
+    'bg-yellow-100': score >= 60 && score < 80,
+    'bg-red-700': score <= 20
+  })
 }

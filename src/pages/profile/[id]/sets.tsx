@@ -38,6 +38,11 @@ const Sets = () => {
               <div
                 key={item.id}
                 className="after-bottom flex cursor-pointer flex-col justify-between overflow-hidden rounded-md border p-4 shadow-md after:h-[3px] after:bg-primary after:opacity-0 hover:after:opacity-100"
+                onClick={() =>
+                  void router.push(`
+                  /study-set/${item.id}
+                `)
+                }
               >
                 <div>
                   <div className="flex items-center gap-2">

@@ -8,6 +8,7 @@ import {
   FormLabel
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { type TStudySetById } from '@/types/client-types/study-set-route'
 import { api } from '@/utils/api'
@@ -89,6 +90,7 @@ export const StudySetForm = ({
   })
 
   const { control, handleSubmit, watch, reset } = form
+  console.log(form.getValues())
 
   useEffect(() => {
     reset(defaultValues as TStudySetFormValues)
@@ -215,7 +217,26 @@ export const StudySetForm = ({
               </FormItem>
             )}
           />
-          <div>a</div>
+          <div className="col-span-1 flex grow">
+            <FormField
+              name="isPublic"
+              control={control}
+              render={({ field }) => (
+                <FormItem className="ml-auto mt-auto flex items-center gap-2">
+                  <FormLabel className="cursor-pointer">
+                    Make it public
+                  </FormLabel>
+                  <FormControl className="m-0 cursor-pointer">
+                    <Switch
+                      className="!mt-0"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
         <div>
           <SortableList

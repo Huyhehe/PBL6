@@ -45,7 +45,7 @@ const MyApp = ({
     >
       <SessionProvider session={session}>
         <Suspense fallback="loading...">
-          <div className={`flex min-h-screen flex-col ${raleway.className}`}>
+          <div className={`flex min-h-screen flex-col ${'raleway.className'}`}>
             <TopBar className="sticky inset-x-0 top-0 z-10 shrink-0" />
             <div className="shrink grow">
               {getLayout(<Component {...pageProps} />)}

@@ -17,6 +17,7 @@ export const authRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      throw new Error('Please try to continue with Google or Github')
       try {
         const isUserExistWithEmail = await ctx.db.user.findFirst({
           where: {

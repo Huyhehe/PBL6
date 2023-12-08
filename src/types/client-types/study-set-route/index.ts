@@ -4,4 +4,9 @@ import type { inferRouterOutputs, inferRouterInputs } from '@trpc/server'
 type RouterOutput = inferRouterOutputs<AppRouter>
 type RouterInput = inferRouterInputs<AppRouter>
 
-export type TStudySetById = RouterOutput['study']['getStudySetById']
+export type TStudySetById =
+  | RouterOutput['study']['getStudySetById']
+  | null
+  | undefined
+export type TStudyCardFromSetById =
+  RouterOutput['study']['getStudySetById']['cards']
