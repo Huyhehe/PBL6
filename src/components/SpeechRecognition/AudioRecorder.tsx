@@ -28,9 +28,7 @@ const ExampleComponent = () => {
     return getRecognitionResultExtracted(data || mockTTS) ?? {}
   }, [data])
   const ref = useRef<HTMLTextAreaElement>(null)
-  const [randomText, setRandomText] = useState<string>(
-    "Hello, Let's go to the beach"
-  )
+  const [randomText, setRandomText] = useState<string>('Good morning')
 
   const recorderControls = useAudioRecorder()
   const {
