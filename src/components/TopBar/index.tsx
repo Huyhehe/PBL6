@@ -23,7 +23,7 @@ const TopBar = ({ className = '' }: TopBarProps) => {
   return (
     <div
       className={cn(
-        'bg-card text-foreground top-bar-height flex px-12 items-center gap-4',
+        'bg-card text-foreground top-bar-height flex px-12 items-center gap-4 border-b border-b-foreground/20',
         className
       )}
     >

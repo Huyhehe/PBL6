@@ -1,0 +1,1 @@
+export { RecommendQuiz } from './RecommendQuiz'

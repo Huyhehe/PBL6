@@ -46,6 +46,38 @@ export const studyRouter = createTRPCRouter({
         throw new Error((error as Error)?.message)
       }
     }),
+  getAllStudySets: protectedProcedure
+    .input(
+      z.object({
+        filter: z.string().optional().nullable(),
+        isPublic: z.boolean()
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { isPublic, filter } = input
+      try {
+        const studySets = await ctx.db.studySet.findMany({
+          where: {
+            isPublic,
+            title: {
+              contains: filter || ''
+            }
+          },
+          include: {
+            StudyCard: true
+          },
+          orderBy: [
+            {
+              createdAt: 'desc'
+            }
+          ]
+        })
+
+        return studySets
+      } catch (error) {
+        throw new Error((error as Error)?.message)
+      }
+    }),
   getStudySetById: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {

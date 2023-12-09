@@ -112,3 +112,15 @@ export const generateColorForTableCell = (
     'bg-red-700': score <= 20
   })
 }
+
+export const autoGenerateExample = () => {
+  const dataSet = [
+    "Hello, Let's go to the beach",
+    'I am a student',
+    'She sells seashells by the seashore',
+    'I scream, you scream, we all scream for ice cream'
+  ]
+
+  const randomIndex = Math.floor(Math.random() * dataSet.length)
+  return dataSet[randomIndex] || ''
+}

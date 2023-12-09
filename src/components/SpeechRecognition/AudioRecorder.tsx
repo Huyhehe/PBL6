@@ -9,20 +9,28 @@ import {
 import { useExternalAPI } from '@/hooks/useExternalAPI'
 import { cn } from '@/lib/utils'
 import {
+  autoGenerateExample,
   generateColorForTableCell,
   getRecognitionResultExtracted
 } from '@/utils'
 import { mockTTS } from '@/utils/mock'
-import { Mic, MicOff } from 'lucide-react'
-import { useEffect, useMemo } from 'react'
+import { Mic, MicOff, Shuffle } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAudioRecorder } from 'react-audio-voice-recorder'
 import { Button } from '../ui/button'
+import { Loading } from '../common/Loading'
+import { Textarea } from '../ui/textarea'
+import { IconButton } from '../common/IconButton'
 
 const ExampleComponent = () => {
-  const { data, fetchData } = useExternalAPI()
+  const { data, loading, fetchData } = useExternalAPI()
   const extractedData = useMemo(() => {
     return getRecognitionResultExtracted(data || mockTTS) ?? {}
   }, [data])
+  const ref = useRef<HTMLTextAreaElement>(null)
+  const [randomText, setRandomText] = useState<string>(
+    "Hello, Let's go to the beach"
+  )
 
   const recorderControls = useAudioRecorder()
   const {
@@ -65,6 +73,16 @@ const ExampleComponent = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex min-h-[5rem] w-full flex-col items-center justify-center bg-white text-xl">
+        {/* <Textarea ref={ref} className="h-full w-full bg-transparent text-xl" /> */}
+        {randomText}
+        <IconButton
+          className="cursor-pointer justify-self-end"
+          onClick={() => setRandomText(autoGenerateExample())}
+        >
+          <Shuffle />
+        </IconButton>
+      </div>
       <div
         className={cn(
           'flex aspect-square mt-auto w-[5rem] cursor-pointer items-center justify-center rounded-full bg-cyan-400 transition-colors',
@@ -92,11 +110,14 @@ const ExampleComponent = () => {
           void fetchData({
             audioStream: new File([recordingBlob as BlobPart], 'audio.wav', {
               type: 'audio/wav'
-            })
+            }),
+            referenceText: ref.current?.value || ''
           })
         }}
+        disabled={loading}
       >
         Submit
+        {loading && <Loading />}
       </Button>
       {extractedData && (
         <div className="text-lg">
