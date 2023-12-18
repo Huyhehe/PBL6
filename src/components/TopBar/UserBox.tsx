@@ -41,12 +41,14 @@ import { Input } from '../ui/input'
 import { useToast } from '../ui/use-toast'
 import { signInformSchema, signUpformSchema } from './schemas'
 import Link from 'next/link'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface UserBoxProps {
   className?: string
 }
 
 export const UserBox = ({ className = '' }: UserBoxProps) => {
+  const { t } = useLanguage()
   const { toast } = useToast()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [tabValue, setTabValue] = useState('signin')
@@ -141,7 +143,9 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>My Studying</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {t.topBar.controlMenu.myStudying.header}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer" asChild>
@@ -150,18 +154,20 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
                   className="w-full"
                 >
                   <Library className="mr-2 h-4 w-4" />
-                  <span>Study sets</span>
+                  <span>{t.topBar.controlMenu.myStudying.studySets}</span>
                   <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel>Account setting</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {t.topBar.controlMenu.accountSetting.header}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer">
                 <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <span>{t.topBar.controlMenu.accountSetting.profile}</span>
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -172,7 +178,9 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href={'/admin'} className="w-full">
                       <Wrench className="mr-2 h-4 w-4" />
-                      <span>Management</span>
+                      <span>
+                        {t.topBar.controlMenu.accountSetting.management}
+                      </span>
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </Link>
                   </DropdownMenuItem>
@@ -189,7 +197,7 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
               }
             >
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Logout</span>
+              <span>{t.topBar.controlMenu.accountSetting.logout}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

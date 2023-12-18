@@ -7,6 +7,8 @@ import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import useHasMounted from '@/hooks/useHasMounted'
 import { Logo } from '../common/Logo'
+import { useLanguage } from '@/hooks/useLanguage'
+import { useRouter } from 'next/router'
 
 interface TopBarProps {
   className?: string
@@ -15,6 +17,8 @@ interface TopBarProps {
 const TopBar = ({ className = '' }: TopBarProps) => {
   const { theme, setTheme } = useTheme()
   const { hasMounted } = useHasMounted()
+  const { locale } = useLanguage()
+  const { push } = useRouter()
 
   const handleSetTheme = (value: boolean) => {
     setTheme(value ? 'dark' : 'light')
@@ -31,7 +35,7 @@ const TopBar = ({ className = '' }: TopBarProps) => {
       <div
         className="cursor-pointer"
         onClick={() => {
-          window.location.href = '/'
+          void push('/', undefined, { locale })
         }}
       >
         <Logo />
