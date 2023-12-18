@@ -10,6 +10,7 @@ import { useExternalAPI } from '@/hooks/useExternalAPI'
 import { cn } from '@/lib/utils'
 import {
   autoGenerateExample,
+  generateColorForEachWord,
   generateColorForTableCell,
   getRecognitionResultExtracted
 } from '@/utils'
@@ -19,8 +20,14 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAudioRecorder } from 'react-audio-voice-recorder'
 import { Button } from '../ui/button'
 import { Loading } from '../common/Loading'
-import { Textarea } from '../ui/textarea'
 import { IconButton } from '../common/IconButton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '../ui/tooltip'
+import { Switch } from '../ui/switch'
 
 const ExampleComponent = () => {
   const { data, loading, fetchData } = useExternalAPI()
@@ -29,6 +36,7 @@ const ExampleComponent = () => {
   }, [data])
   const ref = useRef<HTMLTextAreaElement>(null)
   const [randomText, setRandomText] = useState<string>('Good morning')
+  const [isProfessionMode, setIsProfessionMode] = useState(false)
 
   const recorderControls = useAudioRecorder()
   const {
@@ -70,8 +78,8 @@ const ExampleComponent = () => {
   }, [recordingBlob])
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <div className="flex min-h-[5rem] w-full flex-col items-center justify-center bg-white text-xl">
+    <div className="flex min-w-full flex-col items-center justify-center gap-4">
+      <div className="flex min-h-[5rem] w-1/2 flex-col items-center justify-center rounded-lg bg-white text-xl">
         {/* <Textarea ref={ref} className="h-full w-full bg-transparent text-xl" /> */}
         {randomText}
         <IconButton
@@ -81,6 +89,7 @@ const ExampleComponent = () => {
           <Shuffle />
         </IconButton>
       </div>
+
       <div
         className={cn(
           'flex aspect-square mt-auto w-[5rem] cursor-pointer items-center justify-center rounded-full bg-cyan-400 transition-colors',
@@ -117,7 +126,41 @@ const ExampleComponent = () => {
         Submit
         {loading && <Loading />}
       </Button>
-      {extractedData && (
+
+      <div className="flex min-h-[5rem] w-1/2 items-center justify-center gap-1 rounded-lg bg-white text-xl">
+        {!!extractedData &&
+          extractedData?.words?.map((word, index) => (
+            <TooltipProvider key={index}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span
+                    className={cn(
+                      generateColorForEachWord(word.AccuracyScore),
+                      'hover:scale-110 transition-all animate-in cursor-pointer'
+                    )}
+                  >
+                    {word?.Word}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {word?.Syllables?.map((syllable, index) => (
+                    <span key={index} className="font-bold">
+                      {syllable.Syllable}
+                    </span>
+                  ))}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ))}
+      </div>
+      <div className="flex w-1/2 justify-end gap-2">
+        <span>Professional Mode</span>
+        <Switch
+          checked={isProfessionMode}
+          onCheckedChange={setIsProfessionMode}
+        />
+      </div>
+      {extractedData && isProfessionMode && (
         <div className="text-lg">
           <Table className="text-lg">
             <TableHeader>

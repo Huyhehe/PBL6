@@ -52,19 +52,20 @@ model Session {
 }
 
 model User {
-    id            String     @id @default(cuid())
-    firstName     String?
-    lastName      String?
-    username      String?    @unique
-    name          String?
-    email         String?    @unique
-    emailVerified DateTime?
-    image         String?
-    isAdmin       Boolean    @default(false)
-    accounts      Account[]
-    sessions      Session[]
-    courses       Course[]
-    StudySet      StudySet[]
+    id              String            @id @default(cuid())
+    firstName       String?
+    lastName        String?
+    username        String?           @unique
+    name            String?
+    email           String?           @unique
+    emailVerified   DateTime?
+    image           String?
+    isAdmin         Boolean           @default(false)
+    accounts        Account[]
+    sessions        Session[]
+    courses         Course[]
+    StudySet        StudySet[]
+    MatchGameResult MatchGameResult[]
 }
 
 model VerificationToken {
@@ -113,14 +114,15 @@ model Answer {
 }
 
 model StudySet {
-    id          String      @id @default(cuid())
-    title       String
-    description String
-    isPublic    Boolean     @default(false)
-    createdAt   DateTime    @default(now())
-    User        User        @relation(fields: [userId], references: [id])
-    userId      String
-    StudyCard   StudyCard[]
+    id              String            @id @default(cuid())
+    title           String
+    description     String
+    isPublic        Boolean           @default(false)
+    createdAt       DateTime          @default(now())
+    User            User              @relation(fields: [userId], references: [id])
+    userId          String
+    StudyCard       StudyCard[]
+    MatchGameResult MatchGameResult[]
 }
 
 model StudyCard {
@@ -129,6 +131,17 @@ model StudyCard {
     definition String
     imageURL   String?
     index      Int?
+    StudySet   StudySet @relation(fields: [studySetId], references: [id])
+    studySetId String
+}
+
+model MatchGameResult {
+    id         String   @id @default(cuid())
+    time       Float
+    createdAt  DateTime @default(now())
+    isRecord   Boolean  @default(false)
+    User       User     @relation(fields: [userId], references: [id])
+    userId     String
     StudySet   StudySet @relation(fields: [studySetId], references: [id])
     studySetId String
 }

@@ -21,7 +21,8 @@ const tabs: TStudySetTab[] = [
   },
   {
     label: 'Match',
-    icon: <Shapes className="text-primary" />
+    icon: <Shapes className="text-primary" />,
+    href: 'match-game'
   }
 ]
 
@@ -59,7 +60,10 @@ const StudySetViewPage = () => {
     <div className="min-full-height-minus-top-bar flex justify-center pt-8">
       <div className="w-3/4 space-y-3 lg:w-1/2 3xl:w-1/3">
         <span className="text-2xl font-bold">{studySet?.title}</span>
-        <StudySetTabs tabs={tabs} />
+        <StudySetTabs
+          studySetId={String(router?.query?.id || '')}
+          tabs={tabs}
+        />
         <FlashCardContainer cards={studySet?.cards || []} />
         <InfoFooter studySet={studySet} />
       </div>

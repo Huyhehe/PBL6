@@ -28,16 +28,16 @@ const ProfileLayout = ({ children }: PropsWithChildren) => {
   }, [userSession])
 
   return (
-    <div className="mt-8 flex flex-col items-center">
+    <div className="mt-8 flex flex-col items-center gap-4">
       <div className="flex w-2/3 items-end gap-4">
         <Avatar className="h-16 w-16">
           <AvatarImage src={userSession?.user.image || ''} />
           <AvatarFallback>{userSession?.user.name}</AvatarFallback>
         </Avatar>
         <div>
-          <div className="text-2xl font-bold">{userSession?.user.email}</div>
+          <div className="text-2xl font-bold">{userSession?.user.name}</div>
           <div className="font-semibold text-muted-foreground">
-            {userSession?.user.name}
+            {userSession?.user.email}
           </div>
         </div>
       </div>

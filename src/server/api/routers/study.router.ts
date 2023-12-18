@@ -38,7 +38,10 @@ export const studyRouter = createTRPCRouter({
             {
               createdAt: 'desc'
             }
-          ]
+          ],
+          include: {
+            StudyCard: true
+          }
         })
 
         return studySets
@@ -177,6 +180,56 @@ export const studyRouter = createTRPCRouter({
         })
 
         return { ...studySet, cards: returnedCards }
+      } catch (error) {
+        throw new Error((error as Error)?.message)
+      }
+    }),
+  createMatchGameResult: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        studySetId: z.string(),
+        time: z.number()
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId, studySetId, time } = input
+      try {
+        const topResult = await ctx.db.matchGameResult.findFirst({
+          where: {
+            studySetId,
+            isRecord: true
+          }
+        })
+
+        const isRecord = topResult?.time ? time < topResult.time : true
+
+        const result = await ctx.db.matchGameResult.create({
+          data: {
+            userId,
+            studySetId,
+            time,
+            isRecord
+          }
+        })
+
+        if (isRecord) {
+          await ctx.db.matchGameResult.updateMany({
+            where: {
+              studySetId,
+              NOT: {
+                id: result.id
+              }
+            },
+            data: {
+              isRecord: false
+            }
+          })
+
+          return { result }
+        }
+
+        return { result, topResult }
       } catch (error) {
         throw new Error((error as Error)?.message)
       }

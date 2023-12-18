@@ -1,5 +1,11 @@
 import { cn } from '@/lib/utils'
 import { type RecognitionResult } from '@/types/client-types/ai-route'
+import {
+  type TMatchCard,
+  type TStudyCardFromSetById
+} from '@/types/client-types/study-set-route'
+import { createId } from '@paralleldrive/cuid2'
+import { omit, shuffle } from 'lodash'
 
 export const pagingDataReturn = <T>({
   items,
@@ -113,6 +119,14 @@ export const generateColorForTableCell = (
   })
 }
 
+export const generateColorForEachWord = (score: number) => {
+  return cn({
+    'text-green-500': score >= 80,
+    'text-yellow-500': score >= 60 && score < 80,
+    'text-red-500': score < 60
+  })
+}
+
 export const autoGenerateExample = () => {
   const dataSet = [
     "Hello, Let's go to the beach",
@@ -123,4 +137,34 @@ export const autoGenerateExample = () => {
 
   const randomIndex = Math.floor(Math.random() * dataSet.length)
   return dataSet[randomIndex] || ''
+}
+
+export const cloneForMatchCards = (
+  cards: TStudyCardFromSetById
+): TMatchCard[] => {
+  const termCards = cards.map((card) => {
+    const newCard: TMatchCard = {
+      ...omit(card, ['term', 'definition']),
+      fakeID: createId(),
+      label: card.term,
+      isMatched: false
+    }
+    return newCard
+  })
+
+  const definitionCards = cards.map((card) => {
+    const newCard: TMatchCard = {
+      ...omit(card, ['term', 'definition']),
+      fakeID: createId(),
+      label: card.definition,
+      isMatched: false
+    }
+    return newCard
+  })
+  const result = [...termCards, ...definitionCards]
+  return shuffle(result)
+}
+
+export const isAllMatched = (cards?: TMatchCard[]) => {
+  return cards?.every((card) => card.isMatched)
 }

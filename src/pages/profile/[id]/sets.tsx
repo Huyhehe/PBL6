@@ -48,6 +48,10 @@ const Sets = () => {
                   <div className="flex items-center gap-2">
                     <div className="text-lg font-bold">{item.title}</div>
                     <span className="divider-vertical h-4 bg-muted-foreground/40" />
+                    <span className="text-sm text-primary">{`${
+                      item.StudyCard.length
+                    } ${item.StudyCard.length > 1 ? 'terms' : 'term'}`}</span>
+                    <span className="divider-vertical h-4 bg-muted-foreground/40" />
                     <div className="flex justify-between">
                       <div className="text-sm">
                         {item.isPublic ? (

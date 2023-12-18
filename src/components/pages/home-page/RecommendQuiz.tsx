@@ -9,7 +9,6 @@ export const RecommendQuiz = () => {
     isPublic: true
   })
 
-  console.log(data)
   if (isLoading)
     return (
       <>

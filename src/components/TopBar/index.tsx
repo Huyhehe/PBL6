@@ -6,6 +6,7 @@ import { Switch } from '../ui/switch'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import useHasMounted from '@/hooks/useHasMounted'
+import { Logo } from '../common/Logo'
 
 interface TopBarProps {
   className?: string
@@ -33,7 +34,7 @@ const TopBar = ({ className = '' }: TopBarProps) => {
           window.location.href = '/'
         }}
       >
-        LOGO
+        <Logo />
       </div>
       <MenuBox />
 

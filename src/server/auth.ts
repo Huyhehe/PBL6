@@ -1,4 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { type User as UserModel } from '@prisma/client'
 import { type GetServerSidePropsContext } from 'next'
 import {
   getServerSession,
@@ -8,12 +9,9 @@ import {
 import DiscordProvider from 'next-auth/providers/discord'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
-import CredentialsProvider from 'next-auth/providers/google'
-import { type User as UserModel } from '@prisma/client'
 
 import { env } from '@/env.mjs'
 import { db } from '@/server/db'
-import { credentialsProviderOptions } from '@/utils/credentialAuth'
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

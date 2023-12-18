@@ -10,3 +10,15 @@ export type TStudySetById =
   | undefined
 export type TStudyCardFromSetById =
   RouterOutput['study']['getStudySetById']['cards']
+
+export type TMatchCard = Omit<
+  TStudyCardFromSetById[number],
+  'term' | 'definition'
+> & {
+  fakeID: string
+  label: string
+  isMatched: boolean
+  animationType?: 'correct' | 'incorrect' | null
+}
+
+export type TMatchGameResult = RouterOutput['study']['createMatchGameResult']

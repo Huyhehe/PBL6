@@ -1,3 +1,5 @@
-export const FlashCardPage = () => {
+const FlashCardPage = () => {
   return <div>FlashCard</div>
 }
+
+export default FlashCardPage
