@@ -43,6 +43,14 @@ jobs:
             - "11:0e:6f:cf:4d:23:fb:f3:fb:7a:34:d3:72:c7:31:e5"
       - run: ssh -oStrictHostKeyChecking=no root@159.65.138.198 "./deploy.sh"
 
+  deploy-server-2:
+    executor: docker/docker
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "11:0e:6f:cf:4d:23:fb:f3:fb:7a:34:d3:72:c7:31:e5"
+      - run: ssh -oStrictHostKeyChecking=no root@128.199.206.196 "./deploy.sh"
+
 workflows:
   deploy-anna-app:
     jobs:
@@ -56,6 +64,12 @@ workflows:
       - deploy:
           requires:
             - build-and-push
+          filters:
+            branches:
+              only: main
+      - deploy-server-2:
+          requires:
+            - deploy
           filters:
             branches:
               only: main
