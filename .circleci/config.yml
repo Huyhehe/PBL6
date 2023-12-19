@@ -1,21 +1,61 @@
-# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/orb-intro/
 orbs:
-  node: circleci/node@4.7
+  node: circleci/node@5.1.1
+  docker: circleci/docker@2.4.0
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+jobs:
+  build-app:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run: yarn build
+
+  build-and-push:
+    environment:
+      DOCKER_IMAGE: jette338/pbl6
+      DOCKER_TAG: latest
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check:
+          docker-username: DOCKER_LOGIN
+          docker-password: DOCKER_PASSWORD
+      - docker/build:
+          image: $DOCKER_IMAGE
+          tag: $DOCKER_TAG
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: $DOCKER_IMAGE
+          tag: $DOCKER_TAG
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
+
+  deploy:
+    executor: docker/docker
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "11:0e:6f:cf:4d:23:fb:f3:fb:7a:34:d3:72:c7:31:e5"
+      - run: ssh -oStrictHostKeyChecking=no root@159.65.138.198 "./deploy.sh"
+
 workflows:
-  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  deploy-anna-app:
     jobs:
-      - node/test:
-          # This is the node version to use for the `cimg/node` tag
-          # Relevant tags can be found on the CircleCI Developer Hub
-          # https://circleci.com/developer/images/image/cimg/node
-          version: '16.10'
-          # If you are using yarn, change the line below from "npm" to "yarn"
-          pkg-manager: npm
+      - build-app
+      - build-and-push:
+          requires:
+            - build-app
+          filters:
+            branches:
+              only: main
+      - deploy:
+          requires:
+            - build-and-push
+          filters:
+            branches:
+              only: main
