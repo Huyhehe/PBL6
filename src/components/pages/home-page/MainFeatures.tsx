@@ -23,12 +23,14 @@ export const MainFeatures = () => {
   ]
   return (
     <div className="space-y-2">
-      <span className="text-lg font-semibold">You may love to try these!</span>
-      <div className="grid w-1/2 grid-cols-3 gap-4">
+      <span className="text-lg font-semibold">
+        {t.pages.home.mainFeatures.title}
+      </span>
+      <div className="flex w-1/2 gap-4">
         {mainFeatures.map((item, index) => (
           <div
             key={index}
-            className="box-with-after flex min-h-[8rem] min-w-[20rem] flex-col gap-2 rounded-2xl p-4"
+            className="box-with-after flex min-h-[8rem] w-[20rem] flex-col gap-2 rounded-2xl p-4"
             onClick={() => void router.push(item.href, undefined, { locale })}
           >
             <span className="font-bold">{item.title}</span>

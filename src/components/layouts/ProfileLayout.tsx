@@ -2,25 +2,27 @@ import { useSession } from 'next-auth/react'
 import { useMemo, type PropsWithChildren } from 'react'
 import { RouterTabs } from '../common/RouterTabs'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { useLanguage } from '@/hooks/useLanguage'
 
 const ProfileLayout = ({ children }: PropsWithChildren) => {
   const { data: userSession } = useSession()
+  const { t } = useLanguage()
 
   const routerTabItems = useMemo(() => {
     const id = userSession?.user?.id
     return [
       {
-        label: 'Study sets',
+        label: t.pages.profile.tabs.studySets.header,
         value: 'sets',
         href: `/profile/${id}/sets`
       },
       {
-        label: 'Quizzes',
+        label: t.pages.profile.tabs.quizzes,
         value: 'quizzes',
         href: `/profile/${id}/quizzes`
       },
       {
-        label: 'Settings',
+        label: t.pages.profile.tabs.settings,
         value: 'settings',
         href: `/profile/${id}/settings`
       }

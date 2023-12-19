@@ -1,5 +1,6 @@
 import { IconButton } from '@/components/common/IconButton'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useLanguage } from '@/hooks/useLanguage'
 import { cn } from '@/lib/utils'
 import { type TStudySetById } from '@/types/client-types/study-set-route'
 import { Pen, Share } from 'lucide-react'
@@ -13,6 +14,7 @@ type TInfoFooterProps = {
 
 const InfoFooter = ({ studySet, className }: TInfoFooterProps) => {
   const router = useRouter()
+  const { t } = useLanguage()
   const { data: userSession } = useSession()
 
   return (
@@ -28,7 +30,9 @@ const InfoFooter = ({ studySet, className }: TInfoFooterProps) => {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="text-xs text-muted-foreground">Created by</span>
+            <span className="text-xs text-muted-foreground">
+              {t.pages.studySet.root.tools.createdBy}
+            </span>
             <span className="font-semibold">
               {studySet?.createdBy?.name || studySet?.createdBy?.email}
             </span>
@@ -37,7 +41,7 @@ const InfoFooter = ({ studySet, className }: TInfoFooterProps) => {
         <div className="flex items-center gap-2">
           <IconButton className="space-x-2 rounded-lg border-[2px]">
             <Share size={20} />
-            <span className="text-lg">share</span>
+            <span className="text-lg">{t.pages.studySet.root.tools.share}</span>
           </IconButton>
           {studySet?.createdBy?.id === userSession?.user?.id && (
             <IconButton

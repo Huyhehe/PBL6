@@ -75,6 +75,43 @@ const en = {
           plural: 'terms'
         }
       }
+    },
+    profile: {
+      tabs: {
+        studySets: {
+          header: 'Study Sets',
+          set: {
+            term: {
+              singular: 'term',
+              plural: 'terms'
+            },
+            private: 'Private',
+            public: 'Public'
+          }
+        },
+        quizzes: 'Quizzes',
+        settings: 'Settings'
+      }
+    },
+    studySet: {
+      root: {
+        sections: {
+          flashCards: 'Flash Cards',
+          learn: 'Learn',
+          test: 'Test',
+          match: 'Match'
+        },
+        tools: {
+          play: 'Play',
+          shuffle: 'Shuffle',
+          prev: 'Previous',
+          next: 'Next',
+          fullScreen: 'Full Screen',
+          share: 'Share',
+          edit: 'Edit',
+          createdBy: 'Created by'
+        }
+      }
     }
   }
 }

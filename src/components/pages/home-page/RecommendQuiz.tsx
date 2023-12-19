@@ -42,14 +42,18 @@ export const RecommendQuiz = () => {
       <span className="text-lg font-semibold">
         {t.pages.home.recommendQuiz.title}
       </span>
-      <div className="flex gap-4">
+      <div className="flex w-1/2 gap-4">
         {!!data?.length &&
           data?.map((item) => (
             <div
               key={item.id}
               className="box-with-after flex min-h-[8rem] min-w-[20rem] flex-col gap-2 rounded-2xl p-4"
               onClick={() =>
-                void router.push(`/study-set/${item.id}`, undefined, { locale })
+                void router.push(
+                  { pathname: '/study-set/[id]', query: { id: item.id } },
+                  undefined,
+                  { locale }
+                )
               }
             >
               <span>{item.title}</span>

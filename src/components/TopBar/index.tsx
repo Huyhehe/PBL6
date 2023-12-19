@@ -9,6 +9,7 @@ import useHasMounted from '@/hooks/useHasMounted'
 import { Logo } from '../common/Logo'
 import { useLanguage } from '@/hooks/useLanguage'
 import { useRouter } from 'next/router'
+import { LanguageSelector } from './LanguageSelector'
 
 interface TopBarProps {
   className?: string
@@ -28,7 +29,7 @@ const TopBar = ({ className = '' }: TopBarProps) => {
   return (
     <div
       className={cn(
-        'bg-card text-foreground top-bar-height flex px-12 items-center gap-4 border-b border-b-foreground/20',
+        'bg-card text-foreground top-bar-height flex px-12 items-center gap-4 shadow-md',
         className
       )}
     >
@@ -43,6 +44,7 @@ const TopBar = ({ className = '' }: TopBarProps) => {
       <MenuBox />
 
       <div className="ml-auto flex items-center gap-3">
+        <LanguageSelector />
         {hasMounted && (
           <Switch
             defaultChecked={hasMounted && theme === 'dark'}

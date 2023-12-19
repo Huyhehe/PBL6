@@ -4,18 +4,22 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 export const useLanguage = () => {
-  const { locale } = useRouter()
+  const { locale, reload } = useRouter()
+
   const [storedLocale, setStoredLocale] = useState(locale)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setStoredLocale((prev) => localStorage.getItem('locale') || prev)
+      setStoredLocale((prev) => {
+        return localStorage.getItem('locale') || prev
+      })
     }
   }, [])
 
   const handleSetLocale = (locale: string) => {
     setStoredLocale(locale)
     localStorage.setItem('locale', locale)
+    reload()
   }
 
   return {

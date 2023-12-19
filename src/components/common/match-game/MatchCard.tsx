@@ -22,7 +22,7 @@ export const MatchCard = ({
         handleCardClick(card)
       }}
       className={cn(
-        'flex cursor-pointer items-center justify-center rounded-[1rem] border-[2px] bg-card shadow-sm hover:bg-card/20 basis-[calc(25%-1rem)]',
+        'flex cursor-pointer items-center justify-center rounded-[1rem] border-[2px] bg-card shadow-sm hover:bg-card/20 basis-[calc(25%-1rem)] text-xl',
         className,
         {
           'bg-primary/5 hover:bg-primary/5 border-primary': value,

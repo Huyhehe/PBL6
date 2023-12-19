@@ -2,29 +2,30 @@ import { FlashCardContainer } from '@/components/common/flash-card/FlashCardCont
 import { InfoFooter, StudySetTabs } from '@/components/pages/study-set'
 import { type TStudySetTab } from '@/components/pages/study-set/StudySetTabs'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useLanguage } from '@/hooks/useLanguage'
 import { api } from '@/utils/api'
 import { CopySlash, FileText, PencilRuler, Shapes } from 'lucide-react'
 import { useRouter } from 'next/router'
 
-const tabs: TStudySetTab[] = [
-  {
-    label: 'Flashcards',
-    icon: <CopySlash className="text-primary" />
-  },
-  {
-    label: 'Learn',
-    icon: <PencilRuler className="text-primary" />
-  },
-  {
-    label: 'Test',
-    icon: <FileText className="text-primary" />
-  },
-  {
-    label: 'Match',
-    icon: <Shapes className="text-primary" />,
-    href: 'match-game'
-  }
-]
+// const tabs: TStudySetTab[] = [
+//   {
+//     label: 'Flashcards',
+//     icon: <CopySlash className="text-primary" />
+//   },
+//   {
+//     label: 'Learn',
+//     icon: <PencilRuler className="text-primary" />
+//   },
+//   {
+//     label: 'Test',
+//     icon: <FileText className="text-primary" />
+//   },
+//   {
+//     label: 'Match',
+//     icon: <Shapes className="text-primary" />,
+//     href: 'match-game'
+//   }
+// ]
 
 const FallBack = () => (
   <div className="flex justify-center pt-8">
@@ -48,9 +49,30 @@ const FallBack = () => (
 
 const StudySetViewPage = () => {
   const router = useRouter()
+  const { t } = useLanguage()
   const { data: studySet, isLoading } = api.study.getStudySetById.useQuery({
     id: String(router?.query?.id || '')
   })
+
+  const tabs: TStudySetTab[] = [
+    {
+      label: t.pages.studySet.root.sections.flashCards,
+      icon: <CopySlash className="text-primary" />
+    },
+    {
+      label: t.pages.studySet.root.sections.learn,
+      icon: <PencilRuler className="text-primary" />
+    },
+    {
+      label: t.pages.studySet.root.sections.test,
+      icon: <FileText className="text-primary" />
+    },
+    {
+      label: t.pages.studySet.root.sections.match,
+      icon: <Shapes className="text-primary" />,
+      href: 'match-game'
+    }
+  ]
 
   if (isLoading) {
     return <FallBack />

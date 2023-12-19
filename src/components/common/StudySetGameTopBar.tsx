@@ -2,9 +2,22 @@ import { useStudySetSectionContext } from '@/context/StudySetSectionContextProvi
 import { useRouter } from 'next/router'
 import { Button } from '../ui/button'
 import { X } from 'lucide-react'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export const StudySetGameTopBar = () => {
   const router = useRouter()
+  const { locale } = useLanguage()
+
+  const handleGoBackToStudySet = () => {
+    void router.push(
+      {
+        pathname: '/study-set/[id]',
+        query: { id: studySet?.id }
+      },
+      undefined,
+      { locale }
+    )
+  }
 
   const { studySet } = useStudySetSectionContext()
 
@@ -13,7 +26,7 @@ export const StudySetGameTopBar = () => {
       <div>Selector</div>
       <h3
         className="cursor-pointer font-semibold"
-        onClick={() => void router.push(`/study-set/${studySet?.id || ''}`)}
+        onClick={handleGoBackToStudySet}
       >
         {studySet?.title}
       </h3>
@@ -21,7 +34,7 @@ export const StudySetGameTopBar = () => {
         <Button
           variant="outline"
           className="border-foreground bg-transparent p-2 text-foreground hover:bg-transparent"
-          onClick={() => void router.push(`/study-set/${studySet?.id || ''}`)}
+          onClick={handleGoBackToStudySet}
         >
           <X />
         </Button>

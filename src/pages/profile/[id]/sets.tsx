@@ -6,9 +6,11 @@ import dayjs from 'dayjs'
 import { TimeStampDivider } from '@/components/common/TimeStampDivider'
 import { groupBy } from 'lodash'
 import { Badge } from '@/components/ui/badge'
+import { useLanguage } from '@/hooks/useLanguage'
 
 const Sets = () => {
   const router = useRouter()
+  const { t } = useLanguage()
   const { id } = router.query
   const { data } = api.study.getAllStudySetsByUserId.useQuery({
     userId: String(id)
@@ -50,7 +52,11 @@ const Sets = () => {
                     <span className="divider-vertical h-4 bg-muted-foreground/40" />
                     <span className="text-sm text-primary">{`${
                       item.StudyCard.length
-                    } ${item.StudyCard.length > 1 ? 'terms' : 'term'}`}</span>
+                    } ${
+                      item.StudyCard.length > 1
+                        ? t.pages.profile.tabs.studySets.set.term.plural
+                        : t.pages.profile.tabs.studySets.set.term.singular
+                    }`}</span>
                     <span className="divider-vertical h-4 bg-muted-foreground/40" />
                     <div className="flex justify-between">
                       <div className="text-sm">

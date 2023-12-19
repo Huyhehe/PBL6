@@ -76,6 +76,43 @@ const vi = {
           plural: 'từ'
         }
       }
+    },
+    profile: {
+      tabs: {
+        studySets: {
+          header: 'Bộ từ của tôi',
+          set: {
+            term: {
+              singular: 'từ',
+              plural: 'từ'
+            },
+            private: 'Riêng tư',
+            public: 'Công khai'
+          }
+        },
+        quizzes: 'Quizzes',
+        settings: 'Cài đặt'
+      }
+    },
+    studySet: {
+      root: {
+        sections: {
+          flashCards: 'Thẻ Học',
+          learn: 'Học & Ôn tập',
+          test: 'Kiểm Tra',
+          match: 'Trò Chơi'
+        },
+        tools: {
+          play: 'Phát',
+          shuffle: 'Xáo Trộn',
+          prev: 'Trước',
+          next: 'Sau',
+          fullScreen: 'Toàn Màn Hình',
+          share: 'Chia Sẻ',
+          edit: 'Chỉnh Sửa',
+          createdBy: 'Tạo bởi'
+        }
+      }
     }
   }
 }
