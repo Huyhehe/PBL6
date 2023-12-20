@@ -16,9 +16,11 @@ import { Repeat } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export const MatchGameContainer = () => {
   const { data: session } = useSession()
+  const { t } = useLanguage()
   const { matchCards, setMatchCards } = useStudySetSectionContext()
   const [currentCard, setCurrentCard] = useState<TMatchCard | null>(null)
   const milliSecondCountRef = useRef<TMilliSecondCountRef>(null)
@@ -106,19 +108,21 @@ export const MatchGameContainer = () => {
         <div className="w-2/5 space-y-6">
           <div className="grid grid-cols-2 items-center">
             <h1 className="text-3xl font-bold">
-              Nice work! Can you match even faster?
+              {t.pages.studySet.match.result.title}
             </h1>
             <div className="flex justify-end">
               <Image src={congratsIcon} alt="congrats" />
             </div>
           </div>
           <span>
-            Try and beat the best time of{' '}
-            <strong>{getTheBestTime()} seconds</strong>
+            {t.pages.studySet.match.result.description}{' '}
+            <strong>
+              {getTheBestTime()} {t.pages.studySet.match.result.seconds}
+            </strong>
           </span>
           <div className="space-y-2">
             <p>
-              <strong>Your record</strong>
+              <strong>{t.pages.studySet.match.result.yourRecord}</strong>
             </p>
             <div className="flex w-full items-center gap-2 rounded-md border-[2px] border-primary px-4 py-2">
               <Image src={crownIcon} alt="crown" />
@@ -136,7 +140,7 @@ export const MatchGameContainer = () => {
             onClick={() => void router.reload()}
             className="gap-2 p-6 text-xl"
           >
-            Play again <Repeat size={18} />
+            {t.pages.studySet.match.result.playAgain} <Repeat size={18} />
           </Button>
         </div>
       </div>

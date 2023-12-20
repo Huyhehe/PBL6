@@ -111,6 +111,21 @@ const en = {
           edit: 'Edit',
           createdBy: 'Created by'
         }
+      },
+      match: {
+        cover: {
+          title: 'Ready to play?',
+          description:
+            'Match all the terms with their definitions as fast as you can. Avoid wrong matches, they add extra time!',
+          startGame: 'Start Game'
+        },
+        result: {
+          title: 'Nice work! Can you match even faster?',
+          seconds: 'seconds',
+          description: 'Try and beat the best time of',
+          yourRecord: 'Your Record',
+          playAgain: 'Play Again'
+        }
       }
     }
   }

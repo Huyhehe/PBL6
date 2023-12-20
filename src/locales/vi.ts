@@ -112,6 +112,21 @@ const vi = {
           edit: 'Chỉnh Sửa',
           createdBy: 'Tạo bởi'
         }
+      },
+      match: {
+        cover: {
+          title: 'Sẵn sàng chưa nào?',
+          description:
+            'Chọn đúng các cặp từ nhanh nhất có thể. Tránh chọn sai vì nó sẽ cộng thêm thời gian đấy!',
+          startGame: 'Bắt đầu'
+        },
+        result: {
+          title: 'Hay lắm! Bạn có tự tin làm nhanh hơn không?',
+          seconds: 'giây',
+          description: 'Hãy thử đánh bại kỷ lục',
+          yourRecord: 'Kỷ lục của bạn',
+          playAgain: 'Chơi lại'
+        }
       }
     }
   }
