@@ -4,8 +4,10 @@ import {
   type TMatchCard,
   type TStudyCardFromSetById
 } from '@/types/client-types/study-set-route'
+import { type TTestSchema } from '@/types/validation-types/study-set'
 import { createId } from '@paralleldrive/cuid2'
-import { omit, shuffle } from 'lodash'
+import { type TestCardResultChoice } from '@prisma/client'
+import { isNil, omit, shuffle } from 'lodash'
 
 export const pagingDataReturn = <T>({
   items,
@@ -167,4 +169,89 @@ export const cloneForMatchCards = (
 
 export const isAllMatched = (cards?: TMatchCard[]) => {
   return cards?.every((card) => card.isMatched)
+}
+
+export const generateTrueFalseQuestion = (
+  cards: TStudyCardFromSetById,
+  amount = 1
+) => {
+  const shuffledDefinitions = shuffle(cards.map((card) => card.definition))
+  const shuffledCards = shuffle(cards)
+  const newCards = shuffledCards.map((card, index) => ({
+    ...card,
+    type: 'true-false' as const,
+    definition: shuffledDefinitions[index] || '',
+    originalDefinition: card.definition
+  }))
+
+  return shuffle(newCards).slice(0, amount)
+}
+
+export const checkIsCorrectTestAnswer = (
+  ans: TTestSchema['answers'][number]
+) => {
+  const { type } = ans
+  switch (type) {
+    case 'true-false':
+      return ans.tfAnswer === (ans.definition === ans.originalDefinition)
+    case 'multiple-choice': {
+      const chosen = ans.mcAnswer?.find((item) => item.isChosen)
+      return chosen?.content === ans.term
+    }
+    case 'written':
+      return ans.writtenAnswer === ans.definition
+    default:
+      return false
+  }
+}
+
+export const getScoreFromTestResult = (answers: TTestSchema['answers']) => {
+  const score = answers.reduce((acc, ans) => {
+    return acc + Number(checkIsCorrectTestAnswer(ans))
+  }, 0)
+
+  return score
+}
+
+export const generateTestResultChoicesForServer = (
+  ans: TTestSchema['answers'][number] & {
+    id: string
+  }
+) => {
+  const { type } = ans
+  switch (type) {
+    case 'true-false':
+      return [
+        {
+          index: 0,
+          content: 'true',
+          isChosen: ans.tfAnswer ?? false,
+          testCardResultId: ans.id,
+          isCorrect: ans.originalDefinition === ans.definition
+        },
+        {
+          index: 1,
+          content: 'false',
+          isChosen: isNil(ans.tfAnswer) ? false : !ans.tfAnswer,
+          testCardResultId: ans.id,
+          isCorrect: ans.originalDefinition !== ans.definition
+        }
+      ]
+    // case 'multiple-choice': {
+    //   const chosen = ans.mcAnswer?.find((item) => item.isChosen)
+    //   return chosen?.content || []
+    // }
+    // case 'written':
+    //   return ans.writtenAnswer
+    default:
+      return []
+  }
+}
+
+export const checkIsUserAnswerCorrect = (
+  testCardResultChoice: TestCardResultChoice[]
+) => {
+  return testCardResultChoice.some(
+    (choice) => choice.isChosen && choice.isCorrect
+  )
 }

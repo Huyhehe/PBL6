@@ -90,7 +90,6 @@ export const StudySetForm = ({
   })
 
   const { control, handleSubmit, watch, reset } = form
-  console.log(form.getValues())
 
   useEffect(() => {
     reset(defaultValues as TStudySetFormValues)
@@ -263,7 +262,8 @@ export const StudySetForm = ({
                     <Button
                       variant={'freeStyle'}
                       className="p-0"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault()
                         handleSwapContent(card.index, {
                           term: card.term,
                           definition: card.definition

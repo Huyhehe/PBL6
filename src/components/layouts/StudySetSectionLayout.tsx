@@ -5,7 +5,7 @@ import { StudySetSectionContextProvider } from '@/context/StudySetSectionContext
 const StudySetSectionLayout = ({ children }: PropsWithChildren<object>) => {
   return (
     <StudySetSectionContextProvider>
-      <div className="min-full-height-minus-top-bar flex flex-col">
+      <div className="flex min-h-screen flex-col">
         <StudySetGameTopBar />
         {children}
       </div>

@@ -7,26 +7,6 @@ import { api } from '@/utils/api'
 import { CopySlash, FileText, PencilRuler, Shapes } from 'lucide-react'
 import { useRouter } from 'next/router'
 
-// const tabs: TStudySetTab[] = [
-//   {
-//     label: 'Flashcards',
-//     icon: <CopySlash className="text-primary" />
-//   },
-//   {
-//     label: 'Learn',
-//     icon: <PencilRuler className="text-primary" />
-//   },
-//   {
-//     label: 'Test',
-//     icon: <FileText className="text-primary" />
-//   },
-//   {
-//     label: 'Match',
-//     icon: <Shapes className="text-primary" />,
-//     href: 'match-game'
-//   }
-// ]
-
 const FallBack = () => (
   <div className="flex justify-center pt-8">
     <div className="w-1/2 space-y-3 3xl:w-1/3">
@@ -65,7 +45,8 @@ const StudySetViewPage = () => {
     },
     {
       label: t.pages.studySet.root.sections.test,
-      icon: <FileText className="text-primary" />
+      icon: <FileText className="text-primary" />,
+      href: 'test'
     },
     {
       label: t.pages.studySet.root.sections.match,

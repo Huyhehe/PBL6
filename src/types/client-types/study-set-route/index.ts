@@ -22,3 +22,5 @@ export type TMatchCard = Omit<
 }
 
 export type TMatchGameResult = RouterOutput['study']['createMatchGameResult']
+
+export type TTestCardResult = RouterOutput['study']['getTestResultById']

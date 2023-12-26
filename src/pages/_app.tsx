@@ -30,7 +30,11 @@ const MyApp = ({
   pageProps: { session, ...pageProps }
 }: AppPropsWithLayout) => {
   const router = useRouter()
-  const isShowTopBar = !router.pathname.endsWith('/match-game')
+  const isShowTopBar =
+    !router.pathname.endsWith('/match-game') &&
+    !router.pathname.endsWith('/test') &&
+    !router.pathname.includes('/test/complete/')
+
   const getLayout = Component.getLayout ?? ((page) => page)
   const { setTheme } = useTheme()
   useEffect(() => {

@@ -1,5 +1,13 @@
+import { testSchema } from '@/schemas/study-set'
 import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc'
-import { pagingDataReturn } from '@/utils'
+import {
+  checkIsCorrectTestAnswer,
+  generateTestResultChoicesForServer,
+  getScoreFromTestResult,
+  pagingDataReturn
+} from '@/utils'
+import { createId } from '@paralleldrive/cuid2'
+import { flatten } from 'lodash'
 
 import { z } from 'zod'
 
@@ -230,6 +238,72 @@ export const studyRouter = createTRPCRouter({
         }
 
         return { result, topResult }
+      } catch (error) {
+        throw new Error((error as Error)?.message)
+      }
+    }),
+  createTestResult: protectedProcedure
+    .input(testSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { userId, studySetId, answers } = input
+      const answersWithId = answers.map((ans) => ({
+        ...ans,
+        id: createId(),
+        isCorrectAnswer: checkIsCorrectTestAnswer(ans)
+      }))
+
+      try {
+        const testResult = await ctx.db.testResult.create({
+          data: {
+            userId,
+            studySetId,
+            score: getScoreFromTestResult(answers)
+          }
+        })
+
+        await ctx.db.testCardResult.createMany({
+          data: answersWithId.map((ans) => ({
+            id: ans.id,
+            testResultId: testResult.id,
+            term: ans.term,
+            definition: ans.definition,
+            type: ans.type,
+            isCorrectAnswer: checkIsCorrectTestAnswer(ans)
+          }))
+        })
+
+        const testCardResultChoicesFlatten = flatten(
+          answersWithId?.map((ans) => {
+            return generateTestResultChoicesForServer(ans)
+          })
+        )
+
+        await ctx.db.testCardResultChoice.createMany({
+          data: testCardResultChoicesFlatten
+        })
+
+        return testResult
+      } catch (error) {
+        throw new Error((error as Error)?.message)
+      }
+    }),
+  getTestResultById: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { id } = input
+      try {
+        const testResult = await ctx.db.testResult.findFirst({
+          where: { id },
+          include: {
+            TestCardResult: {
+              include: {
+                TestCardResultChoice: true
+              }
+            }
+          }
+        })
+
+        return testResult
       } catch (error) {
         throw new Error((error as Error)?.message)
       }

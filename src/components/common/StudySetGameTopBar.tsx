@@ -22,7 +22,7 @@ export const StudySetGameTopBar = () => {
   const { studySet } = useStudySetSectionContext()
 
   return (
-    <div className="flex items-center justify-between bg-card p-3">
+    <div className="sticky inset-x-0 top-0 z-10 flex items-center justify-between bg-card p-3 shadow-md">
       <div>Selector</div>
       <h3
         className="cursor-pointer font-semibold"

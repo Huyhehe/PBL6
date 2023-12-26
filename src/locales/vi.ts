@@ -127,6 +127,52 @@ const vi = {
           yourRecord: 'Kỷ lục của bạn',
           playAgain: 'Chơi lại'
         }
+      },
+      test: {
+        submitTest: 'Nộp bài',
+        submitDescription: 'Xong rồi đấy, bạn có muốn nộp bài chưa?',
+        card: {
+          term: 'Từ',
+          definition: 'Định nghĩa',
+          of: 'trong',
+          truefalse: {
+            chooseAnswer: 'Chọn câu trả lời',
+            true: 'Đúng',
+            false: 'Sai'
+          },
+          multipleChoice: {
+            chooseMatchingItem: 'Chọn câu trả lời phù hợp'
+          },
+          matching: {
+            matchingQuestions: 'Chọn câu trả lời phù hợp',
+            guideLine: 'Chọn một từ để ghép với định nghĩa',
+            guildAnswer: 'Chọn từ phù hợp từ danh sách bên dưới'
+          },
+          written: {
+            yourAnswer: 'Câu trả lời của bạn',
+            typeTheAnswer: 'Nhập câu trả lời',
+            next: 'Tiếp theo'
+          }
+        },
+        result: {
+          title: 'Hãy tự hào về bản thân và tiếp tục cố gắng nào!',
+          board: {
+            correctAnswer: {
+              singular: 'Câu trả lời đúng',
+              plural: 'Câu trả lời đúng'
+            },
+            incorrectAnswer: {
+              singular: 'Câu trả lời sai',
+              plural: 'Câu trả lời sai'
+            },
+            tryFlashCards: 'Hãy thử học với thẻ học',
+            tryMatchGame: 'Hãy thử chơi trò chơi ghép thẻ'
+          },
+          youGotThis: 'Bạn đã làm đúng!',
+          awesome: 'Tuyệt vời!',
+          noWorries: 'Không sao đâu! Học tập là một quá trình!',
+          notQuite: 'Cố lên, bạn vẫn còn đang học nó mà!'
+        }
       }
     }
   }

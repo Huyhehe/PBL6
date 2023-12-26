@@ -105,7 +105,7 @@ export const UserBox = ({ className = '' }: UserBoxProps) => {
     }
   })
 
-  const onSignInFormSubmit = (data: z.infer<typeof signInformSchema>) => {
+  const onSignInFormSubmit = () => {
     // loginUserMutation.mutate({
     //   username: data.username,
     //   password: data.password

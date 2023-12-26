@@ -66,6 +66,7 @@ model User {
     courses         Course[]
     StudySet        StudySet[]
     MatchGameResult MatchGameResult[]
+    TestResult      TestResult[]
 }
 
 model VerificationToken {
@@ -123,6 +124,7 @@ model StudySet {
     userId          String
     StudyCard       StudyCard[]
     MatchGameResult MatchGameResult[]
+    TestResult      TestResult[]
 }
 
 model StudyCard {
@@ -144,4 +146,36 @@ model MatchGameResult {
     userId     String
     StudySet   StudySet @relation(fields: [studySetId], references: [id])
     studySetId String
+}
+
+model TestResult {
+    id             String           @id @default(cuid())
+    createdAt      DateTime         @default(now())
+    score          Int
+    User           User             @relation(fields: [userId], references: [id])
+    userId         String
+    StudySet       StudySet         @relation(fields: [studySetId], references: [id])
+    studySetId     String
+    TestCardResult TestCardResult[]
+}
+
+model TestCardResult {
+    id                   String                 @id @default(cuid())
+    term                 String
+    definition           String
+    type                 String
+    isCorrectAnswer      Boolean                @default(false)
+    TestResult           TestResult             @relation(fields: [testResultId], references: [id])
+    testResultId         String
+    TestCardResultChoice TestCardResultChoice[]
+}
+
+model TestCardResultChoice {
+    id               String         @id @default(cuid())
+    content          String
+    index            Int
+    isChosen         Boolean        @default(false)
+    isCorrect        Boolean        @default(false)
+    TestCardResult   TestCardResult @relation(fields: [testCardResultId], references: [id])
+    testCardResultId String
 }

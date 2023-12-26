@@ -126,6 +126,52 @@ const en = {
           yourRecord: 'Your Record',
           playAgain: 'Play Again'
         }
+      },
+      test: {
+        submitTest: 'Submit test',
+        submitDescription: 'All done! Ready to submit your test?',
+        card: {
+          term: 'Term',
+          definition: 'Definition',
+          of: 'of',
+          truefalse: {
+            chooseAnswer: 'Choose answer',
+            true: 'True',
+            false: 'False'
+          },
+          multipleChoice: {
+            chooseMatchingItem: 'Choose matching item'
+          },
+          matching: {
+            matchingQuestions: 'Matching questions',
+            guideLine: 'Click a term to match it with a definition',
+            guildAnswer: 'Select from list below'
+          },
+          written: {
+            yourAnswer: 'Your answer',
+            typeTheAnswer: 'Type the answer',
+            next: 'Next'
+          }
+        },
+        result: {
+          title: 'Be kind to yourself, and keep practicing!',
+          board: {
+            correctAnswer: {
+              singular: 'Correct Answer',
+              plural: 'Correct Answers'
+            },
+            incorrectAnswer: {
+              singular: 'Incorrect Answer',
+              plural: 'Incorrect Answers'
+            },
+            tryFlashCards: 'Try to study with Flash Cards',
+            tryMatchGame: 'Try to play Match Game'
+          },
+          youGotThis: `You've got this!`,
+          awesome: 'Awesome!',
+          noWorries: 'No worries! learning is a process!',
+          notQuite: `Not quite, you're still learning!`
+        }
       }
     }
   }
