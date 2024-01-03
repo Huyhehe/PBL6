@@ -9,14 +9,17 @@ import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import { Toaster } from '@/components/ui/toaster'
 import '@/styles/globals.css'
 import { useTheme } from 'next-themes'
-import { Raleway } from 'next/font/google'
+import { Be_Vietnam_Pro } from 'next/font/google'
 import { type NextPage } from 'next/types'
 import { Suspense, useEffect, type ReactElement, type ReactNode } from 'react'
 import 'regenerator-runtime/runtime'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-const raleway = Raleway({ subsets: ['latin'] })
+const fontFamily = Be_Vietnam_Pro({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin', 'latin-ext', 'vietnamese']
+})
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -58,7 +61,7 @@ const MyApp = ({
         <SessionProvider session={session}>
           <Suspense fallback="loading...">
             <div
-              className={`flex min-h-screen flex-col ${'raleway.className'}`}
+              className={`flex min-h-screen flex-col ${fontFamily.className}`}
             >
               {isShowTopBar && (
                 <TopBar className="sticky inset-x-0 top-0 z-10 shrink-0" />
