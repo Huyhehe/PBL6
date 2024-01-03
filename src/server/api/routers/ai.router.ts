@@ -11,17 +11,22 @@ export const aiRouter = createTRPCRouter({
   autoCorrection: publicProcedure
     .input(
       z.object({
-        text: z.string()
+        text: z.string(),
+        index: z.number().optional(),
+        isTerm: z.boolean().optional()
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const response = await fetch(`${aiEndpoint}/correct_text`, {
-        method: 'POST',
-        body: JSON.stringify(input),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const response = await fetch(
+        `${aiEndpoint}/newmodel/${input.text}.`
+        // {
+        //   method: 'POST',
+        //   body: JSON.stringify(input),
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   }
+        // }
+      )
       const data = await response.json()
       return data as TTextCorrectionReturn
     }),

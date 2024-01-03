@@ -13,7 +13,7 @@ export const LogoFallback = ({ className }: LogoFallbackProps) => {
         className
       )}
     >
-      <Logo className="text-[3rem]" />
+      <Logo logoImgClassName="w-[20rem]" />
     </div>
   )
 }

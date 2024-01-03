@@ -14,6 +14,7 @@ import { type NextPage } from 'next/types'
 import { Suspense, useEffect, type ReactElement, type ReactNode } from 'react'
 import 'regenerator-runtime/runtime'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -44,26 +45,33 @@ const MyApp = ({
   }, [])
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <SessionProvider session={session}>
-        <Suspense fallback="loading...">
-          <div className={`flex min-h-screen flex-col ${'raleway.className'}`}>
-            {isShowTopBar && (
-              <TopBar className="sticky inset-x-0 top-0 z-10 shrink-0" />
-            )}
-            <div className="shrink grow">
-              {getLayout(<Component {...pageProps} />)}
+    <>
+      <Head>
+        <link rel="icon" href="/T.ico" />
+      </Head>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <SessionProvider session={session}>
+          <Suspense fallback="loading...">
+            <div
+              className={`flex min-h-screen flex-col ${'raleway.className'}`}
+            >
+              {isShowTopBar && (
+                <TopBar className="sticky inset-x-0 top-0 z-10 shrink-0" />
+              )}
+              <div className="shrink grow">
+                {getLayout(<Component {...pageProps} />)}
+              </div>
+              <Toaster />
             </div>
-            <Toaster />
-          </div>
-        </Suspense>
-      </SessionProvider>
-    </ThemeProvider>
+          </Suspense>
+        </SessionProvider>
+      </ThemeProvider>
+    </>
   )
 }
 

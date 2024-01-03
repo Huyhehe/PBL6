@@ -1,5 +1,4 @@
 import { type RecognitionResult } from '@/types/client-types/ai-route'
-import { mockTTS } from '@/utils/mock'
 import axios from 'axios'
 import { useState } from 'react'
 
@@ -9,19 +8,6 @@ export const useExternalAPI = () => {
 
   const [data, setData] = useState<RecognitionResult | null>(null)
   const [loading, setLoading] = useState(false)
-
-  // create readable stream
-  // const audioStream = fs.createReadStream(
-  //   '/home/ces-user/Documents/kaito/PBL6/Cognitive-Speech-TTS/PronunciationAssessment/goodmorning.pcm',
-  //   { highWaterMark: 1024 }
-  // )
-
-  // // send request with chunked data
-  // let uploadFinishTime
-
-  // audioStream.on('end', () => {
-  //   uploadFinishTime = Date.now()
-  // })
 
   const fetchData = ({
     audioStream,
@@ -35,15 +21,18 @@ export const useExternalAPI = () => {
       pronAssessmentParamsJson,
       'utf-8'
     ).toString('base64')
+
+    console.log({ referenceText, pronAssessmentParams, audioStream })
+
     const axiosConfig = {
       baseURL: `https://${region}.stt.speech.microsoft.com/`,
       url: 'speech/recognition/conversation/cognitiveservices/v1?language=en-us',
       headers: {
         Accept: 'application/json;text/xml',
         Connection: 'Keep-Alive',
-        'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
         'Transfer-Encoding': 'chunked',
         Expect: '100-continue',
+        'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
         'Ocp-Apim-Subscription-Key': subscriptionKey,
         'Pronunciation-Assessment': pronAssessmentParams
       }

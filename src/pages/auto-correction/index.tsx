@@ -15,7 +15,7 @@ const AutoCorrection = () => {
     })
   }
 
-  console.log(data?.corrected_text)
+  console.log(data?.result)
   return (
     <div className="flex justify-center py-8">
       <div className="max-w-[50rem] basis-1/2 space-y-4">
@@ -29,9 +29,9 @@ const AutoCorrection = () => {
         <Button onClick={handleSubmit} disabled={isLoading}>
           Submit {isLoading && <Loading />}
         </Button>
-        {data?.corrected_text && (
+        {data?.result && (
           <div className="min-h-[20rem] rounded-lg bg-card p-2 text-xl shadow-sm">
-            {data.corrected_text}
+            {data.result}
           </div>
         )}
       </div>

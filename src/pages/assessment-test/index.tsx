@@ -17,7 +17,7 @@ const TTS = dynamic(
 const AssessmentTest = () => {
   // const { mutate, data } = api.ai.azureSpeechToText.useMutation()
   return (
-    <div className="flex flex-col items-center justify-center gap-4 p-8">
+    <div className="flex flex-col items-center justify-center gap-4">
       {/* <SpeechRec /> */}
       <TTS />
     </div>

@@ -4,6 +4,8 @@ import { ReadOnlyTrueFalseCard } from './ReadOnlyTrueFalseCard'
 import { useLanguage } from '@/hooks/useLanguage'
 import { type CSSProperties } from 'react'
 import { CopySlash, Shapes } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/router'
 
 type TestResultDetailProps = {
   testResultId: string
@@ -11,6 +13,8 @@ type TestResultDetailProps = {
 
 export const TestResultDetail = ({ testResultId }: TestResultDetailProps) => {
   const { t } = useLanguage()
+  const router = useRouter()
+
   const { data, isLoading } = api.study.getTestResultById.useQuery(
     {
       id: testResultId
@@ -59,15 +63,31 @@ export const TestResultDetail = ({ testResultId }: TestResultDetailProps) => {
                 : t.pages.studySet.test.result.board.incorrectAnswer.singular}
             </span>
           </div>
-          <div className="ml-auto space-y-2">
-            <div className="flex items-center gap-2 rounded-md bg-primary p-3 text-white">
+          <div className="ml-auto flex flex-col gap-2">
+            <Button
+              className="box-content flex items-center justify-start gap-2 rounded-md bg-primary p-2 text-white"
+              onClick={() => {
+                void router.push({
+                  pathname: '/study-set/[id]',
+                  query: { id: data?.studySetId }
+                })
+              }}
+            >
               <CopySlash size={30} />
               {t.pages.studySet.test.result.board.tryFlashCards}
-            </div>
-            <div className="flex items-center gap-2 rounded-md bg-primary p-3 text-white">
+            </Button>
+            <Button
+              className="box-content flex items-center justify-start gap-2 rounded-md bg-primary p-2 text-white"
+              onClick={() => {
+                void router.push({
+                  pathname: '/study-set/[id]/match-game',
+                  query: { id: data?.studySetId }
+                })
+              }}
+            >
               <Shapes size={30} />
               {t.pages.studySet.test.result.board.tryMatchGame}
-            </div>
+            </Button>
           </div>
         </div>
         <div className="space-y-4">

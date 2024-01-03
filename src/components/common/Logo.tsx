@@ -1,18 +1,24 @@
 import { cn } from '@/lib/utils'
+import logo from '@/assets/icons/logo.svg'
+import Image from 'next/image'
 
 type LogoProps = {
   className?: string
+  logoImgClassName?: string
 }
 
-export const Logo = ({ className }: LogoProps) => {
+export const Logo = ({ className, logoImgClassName }: LogoProps) => {
   return (
     <span
-      className={cn(
-        'text-2xl font-bold text-primary pointer-events-none',
-        className
-      )}
+      className={cn('font-bold text-primary pointer-events-none', className)}
     >
-      Telziuq
+      <Image
+        src={logo}
+        alt="Logo"
+        width={80}
+        height={80}
+        className={cn(logoImgClassName)}
+      />
     </span>
   )
 }

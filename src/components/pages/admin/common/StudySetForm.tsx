@@ -1,3 +1,4 @@
+import { Loading } from '@/components/common/Loading'
 import { SortableList } from '@/components/dnd-kit/SortableList'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,6 +21,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { CustomFormField } from './CustomFormField'
 
 const formSchema = z.object({
   title: z.string().nonempty(),
@@ -71,6 +73,7 @@ export const StudySetForm = ({
 }: TStudySetFormProps) => {
   const { data: session } = useSession()
   const router = useRouter()
+
   const { mutate: createStudy, isLoading: createLoading } =
     api.study.createStudySet.useMutation({
       onSuccess: () => {
@@ -89,7 +92,20 @@ export const StudySetForm = ({
     resolver: zodResolver(formSchema)
   })
 
-  const { control, handleSubmit, watch, reset } = form
+  const { control, handleSubmit, watch, reset, setValue } = form
+
+  const { mutate: autoCorrect, isLoading: autoCorrectLoading } =
+    api.ai.autoCorrection.useMutation({
+      onSuccess: (data, { index, isTerm }) => {
+        console.log(data, index)
+        if (index === undefined) return
+        if (isTerm) {
+          setValue(`cards.${index}.term`, data?.result || '')
+          return
+        }
+        setValue(`cards.${index}.definition`, data?.result || '')
+      }
+    })
 
   useEffect(() => {
     reset(defaultValues as TStudySetFormValues)
@@ -276,7 +292,8 @@ export const StudySetForm = ({
                       variant={'freeStyle'}
                       className="p-0 transition-all hover:rotate-90"
                       disabled={fields?.length < 3}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault()
                         handleRemoveCard(card.index)
                       }}
                     >
@@ -286,31 +303,10 @@ export const StudySetForm = ({
                 </div>
                 <span className="divider-horizontal h-[2px] bg-muted" />
                 <div className="flex gap-8 p-4">
-                  <FormField
-                    name={`cards.${card.index}.term`}
-                    control={control}
-                    render={({ field }) => (
-                      <FormItem className="grow">
-                        <FormLabel>Term</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="bg-card" />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    name={`cards.${card.index}.definition`}
-                    control={control}
-                    render={({ field }) => (
-                      <FormItem className="grow">
-                        <FormLabel>Definition</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="bg-card" />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <div>Image</div>
+                  <div className="grid grow grid-cols-2 gap-x-8 gap-y-1">
+                    <CustomFormField name={`cards.${card.index}.term`} />
+                    <CustomFormField name={`cards.${card.index}.definition`} />
+                  </div>
                 </div>
               </SortableList.Item>
             )}
