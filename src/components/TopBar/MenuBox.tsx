@@ -38,7 +38,7 @@ export function MenuBox() {
     },
     {
       title: t.topBar.navigationMenu.explore.pronunciation.title,
-      href: '/docs/primitives/scroll-area',
+      href: '/assessment-test',
       description: t.topBar.navigationMenu.explore.pronunciation.description
     }
   ]
