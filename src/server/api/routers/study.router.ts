@@ -1,5 +1,9 @@
 import { testSchema } from '@/schemas/study-set'
-import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc'
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure
+} from '@/server/api/trpc'
 import {
   checkIsCorrectTestAnswer,
   generateTestResultChoicesForServer,
@@ -57,7 +61,7 @@ export const studyRouter = createTRPCRouter({
         throw new Error((error as Error)?.message)
       }
     }),
-  getAllStudySets: protectedProcedure
+  getAllStudySets: publicProcedure
     .input(
       z.object({
         filter: z.string().optional().nullable(),

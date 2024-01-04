@@ -41,7 +41,8 @@ const StudySetViewPage = () => {
     },
     {
       label: t.pages.studySet.root.sections.learn,
-      icon: <PencilRuler className="text-primary" />
+      icon: <PencilRuler className="text-primary" />,
+      href: 'learn'
     },
     {
       label: t.pages.studySet.root.sections.test,

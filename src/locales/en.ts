@@ -66,6 +66,11 @@ const en = {
         autoCorrection: {
           title: 'Grammar check your writing',
           description: 'Get your writing corrected automatically and instantly.'
+        },
+        createSet: {
+          title: 'Create your set',
+          description:
+            'Create your own set of words and phrases to practice and improve your English.'
         }
       },
       recommendQuiz: {
@@ -173,6 +178,16 @@ const en = {
           notQuite: `Not quite, you're still learning!`
         }
       }
+    }
+  },
+  fallback: {
+    notFound: {
+      title: 'Page not found',
+      description: 'The page you are looking for does not exist.'
+    },
+    wip: {
+      title: 'Work in progress',
+      description: 'Will be available soon. Stay tuned!'
     }
   }
 }

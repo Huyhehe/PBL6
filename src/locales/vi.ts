@@ -55,8 +55,9 @@ const vi = {
       mainFeatures: {
         title: 'Bạn có thể thích thử những tính năng này!',
         checkYourSpelling: {
-          title: 'Kiểm tra chính tả của bạn',
-          description: `Không biết bài viết của bạn như thế nào? Hãy kiểm tra nó!`
+          title: 'Kiểm tra phát âm của bạn',
+          description:
+            'Không biết bạn phát âm như thế nào? Hãy kiểm tra nó ngay!'
         },
         grammarPractice: {
           title: 'Luyện tập ngữ pháp',
@@ -67,6 +68,11 @@ const vi = {
           title: 'Tự động sửa lỗi',
           description:
             'Sửa lỗi chính tả và ngữ pháp của bạn tự động và nhanh chóng.'
+        },
+        createSet: {
+          title: 'Tạo bộ từ của bạn',
+          description:
+            'Tạo bộ từ và cụm từ của riêng bạn để luyện tập và nâng cao trình độ tiếng Anh của bạn.'
         }
       },
       recommendQuiz: {
@@ -174,6 +180,16 @@ const vi = {
           notQuite: 'Cố lên, bạn vẫn còn đang học nó mà!'
         }
       }
+    }
+  },
+  fallback: {
+    notFound: {
+      title: 'Không tìm thấy trang này',
+      description: 'Trang bạn đang tìm kiếm không tồn tại.'
+    },
+    wip: {
+      title: 'Đang phát triển',
+      description: 'Chức năng này đang được phát triển. Vui lòng quay lại sau.'
     }
   }
 }
